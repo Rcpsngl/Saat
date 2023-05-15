@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"  />
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Sayaç</title>
+</head>
+<div class="container">
+    <div class="row my-3">
+	    <div class="col-6">
+		    <h2 class="lblTime" id="timer">00:00:00</h2>
+	    </div>
+    </div>
+        <div class="row my-3">
+	        <div class="col-5">
+
+	    	    <button type="button" class="btn btn-view" onclick="timeCount()"> <i class="fas fa-play"></i>
+	    		    Start
+	    	    </button>
+
+	    	    <button type="button" class="btn btn-view" onclick="stopCount()">
+	    		    <i class="fas fa-pause"></i>
+	    		    Pause
+	    	    </button>
+	    	    <button type="button" class="btn btn-view" onclick="resetCount()"><i class="fas fa-undo"></i> Reset</button>
+            </div>
+
+        </div>
+
+        <div class="row my-3 align-items-end">
+	        <div class="col-2">
+
+	    	    <label class="lblTime" for="timeStart">Başlangıç</label>
+	    	    <input id="timeStart" type="text" value="00:00:00" placeholder="00:00:00" class="form-control">
+	        </div>
+	        <div class="col-2">
+	    	    <label class="lblTime" for="timeEnd">Bitiş</label>
+	    	    <input id="timeEnd" type="text" value="23:59:59" placeholder="00:00:00" class="form-control">
+	        </div>
+        </div>
+	    <div class="col-2">
+	    	<button type="button" class="btn btn-view" onclick="setTime()">Set</button>
+            <button type="a" class="btn btn-view" onclick="goBack()"> Saate Dön</button>
+	    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script >
+   let startTime = 0;
+let endTime = 0;
+let currentTime = 0;
+let timeDiff = 0;
+let timer = null;
+goBack = () => {
+    window.location.href = "index.html";
+
+}
+setTime = () => {
+  startTime = document.getElementById("timeStart").value;
+  document.getElementById("timer").innerHTML = startTime;
+} 
+
+timeCount = () => {
+  currentTime = document.getElementById("timer").innerHTML;
+
+  if (currentTime != "00:00:00") {
+    startTime = moment(document.getElementById("timer").innerHTML, "hh:mm:ss");
+    console.log(startTime);
+  } else {
+    startTime = moment(document.getElementById("timeStart").value, "hh:mm:ss");
+  }
+
+  endTime = moment(document.getElementById("timeEnd").value, "hh:mm:ss");
+
+  timeDiff = endTime.diff(startTime);
+
+  timer = setInterval(countDown, 1000);
+}
+
+ countDown = () => {
+  startTime.add(1, "second");
+  
+  document.getElementById("timer").innerHTML = startTime.format("HH:mm:ss");
+  
+  timeDiff = endTime.diff(startTime);
+  if (timeDiff == 0) {
+    stopCount();
+  }
+}
+
+ stopCount = () =>{
+  clearInterval(timer);
+}
+
+ resetCount = () => {
+  clearInterval(timer);
+  document.getElementById("timer").innerHTML = "00:00:00";
+}
+</script>
+</body>
+</html>
+</body>
+</html>
